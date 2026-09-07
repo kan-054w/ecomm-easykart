@@ -37,6 +37,18 @@ export const paymentMethodValidator = v.union(
   v.literal("cash_on_delivery"),
 );
 
+export const bookingStatusValidator = v.union(
+  v.literal("scheduled"),
+  v.literal("completed"),
+  v.literal("cancelled"),
+);
+export type BookingStatus = Infer<typeof bookingStatusValidator>;
+
+export const postStatusValidator = v.union(
+  v.literal("draft"),
+  v.literal("published"),
+);
+
 // ERD entity: User → (Customer | Admin) discriminated by `role`
 // ERD entity: Address (customer shipping addresses)
 // ERD entity: Category, Product, Cart, CartItem, Orders, OrderItem, Payment
@@ -132,6 +144,45 @@ const schema = defineSchema(
       method: paymentMethodValidator,
       paidAt: v.optional(v.number()),
     }).index("by_order", ["orderId"]),
+
+    // ERD entity: Booking (team scheduling — pickups, equipment returns, etc.)
+    bookings: defineTable({
+      userId: v.id("users"),
+      title: v.string(),
+      notes: v.optional(v.string()),
+      startAt: v.number(), // epoch ms
+      durationMinutes: v.number(),
+      status: bookingStatusValidator,
+    })
+      .index("by_user", ["userId"])
+      .index("by_start", ["startAt"]),
+
+    // ERD entity: Post (team-authored content) + PostComment
+    posts: defineTable({
+      authorId: v.id("users"),
+      title: v.string(),
+      body: v.string(),
+      imageUrl: v.optional(v.string()),
+      status: postStatusValidator,
+    })
+      .index("by_author", ["authorId"])
+      .index("by_status", ["status"]),
+
+    postComments: defineTable({
+      postId: v.id("posts"),
+      authorId: v.id("users"),
+      body: v.string(),
+    }).index("by_post", ["postId"]),
+
+    // ERD entity: Message (direct messages between team members)
+    messages: defineTable({
+      senderId: v.id("users"),
+      recipientId: v.id("users"),
+      body: v.string(),
+      readAt: v.optional(v.number()),
+    })
+      .index("by_sender", ["senderId"])
+      .index("by_recipient", ["recipientId"]),
   },
   {
     schemaValidation: false,
