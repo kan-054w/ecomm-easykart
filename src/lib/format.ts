@@ -27,6 +27,12 @@ export function formatDuration(minutes: number): string {
   return m ? `${h} h ${m} min` : `${h} h`;
 }
 
+export const BOOKING_STATUS_LABELS: Record<string, string> = {
+  scheduled: "Scheduled",
+  completed: "Completed",
+  cancelled: "Cancelled",
+};
+
 /** Human labels for order statuses. */
 export const ORDER_STATUS_LABELS: Record<string, string> = {
   pending: "Pending",

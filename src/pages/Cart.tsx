@@ -54,7 +54,7 @@ export default function Cart() {
               <Skeleton key={i} className="h-20 w-full rounded-lg" />
             ))}
           </div>
-        ) : cart.items.length === 0 ? (
+        ) : !cart || cart.items.length === 0 ? (
           <div className="py-24 text-center">
             <ShoppingCart
               className="mx-auto size-8 text-muted-foreground/50"
@@ -68,7 +68,7 @@ export default function Cart() {
               <Link to="/catalog">Browse the catalog</Link>
             </Button>
           </div>
-        ) : (
+        ) : cart ? (
           <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_320px]">
             {/* Lines */}
             <div className="divide-y divide-border/70 border-y border-border/70">
@@ -164,7 +164,7 @@ export default function Cart() {
               </Button>
             </div>
           </div>
-        )}
+        ) : null}
       </main>
       <SiteFooter />
     </div>

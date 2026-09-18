@@ -1,26 +1,31 @@
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 export default function NotFound() {
   return (
-    <motion.div
+    <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="min-h-screen flex flex-col"
+      transition={{ duration: 0.4 }}
+      className="flex min-h-screen flex-col items-center justify-center bg-background px-6 text-foreground"
     >
-
-      
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center">
-        <div className="max-w-5xl mx-auto relative px-4">
-          <div className="flex items-center justify-center min-h-[200px]">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">404</h1>
-              <p className="text-lg text-gray-600">Page Not Found</p>
-            </div>
-          </div>
-        </div>
+      <p className="eyebrow">404</p>
+      <h1 className="mt-3 text-3xl font-semibold tracking-tight">
+        This page doesn&apos;t exist.
+      </h1>
+      <p className="mt-2 max-w-sm text-center text-sm leading-6 text-muted-foreground">
+        The link may be outdated. The catalog is a good place to pick things back
+        up.
+      </p>
+      <div className="mt-8 flex gap-3">
+        <Button asChild>
+          <Link to="/catalog">Browse the catalog</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link to="/">Back home</Link>
+        </Button>
       </div>
-    </motion.div>
+    </motion.main>
   );
 }

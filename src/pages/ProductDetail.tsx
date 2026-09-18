@@ -14,6 +14,7 @@ import {
   Plus,
   ShoppingCart,
 } from "lucide-react";
+import type { Id } from "@/convex/_generated/dataModel";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -23,7 +24,7 @@ export default function ProductDetail() {
   const navigate = useNavigate();
   const product = useQuery(
     api.products.get,
-    id ? { id } : "skip",
+    id ? ({ id } as { id: Id<"products"> }) : "skip",
   );
   const related = useQuery(
     api.products.getRelated,

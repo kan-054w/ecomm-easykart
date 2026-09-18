@@ -13,6 +13,15 @@ import "./index.css";
 const Landing = lazy(() => import("./pages/Landing.tsx"));
 const AuthPage = lazy(() => import("./pages/Auth.tsx"));
 const Dashboard = lazy(() => import("./pages/Dashboard.tsx"));
+const Catalog = lazy(() => import("./pages/Catalog.tsx"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail.tsx"));
+const Cart = lazy(() => import("./pages/Cart.tsx"));
+const Checkout = lazy(() => import("./pages/Checkout.tsx"));
+const Orders = lazy(() => import("./pages/Orders.tsx"));
+const Bookings = lazy(() => import("./pages/Bookings.tsx"));
+const Community = lazy(() => import("./pages/Community.tsx"));
+const Messages = lazy(() => import("./pages/Messages.tsx"));
+const Admin = lazy(() => import("./pages/Admin.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 
 // Simple loading fallback for route transitions
@@ -124,11 +133,71 @@ createRoot(document.getElementById("root")!).render(
                 path="/auth"
                 element={<AuthPage redirectAfterAuth="/dashboard" />}
               />
+              {/* Storefront */}
+              <Route path="/catalog" element={<Catalog />} />
+              <Route path="/products/:id" element={<ProductDetail />} />
+              {/* Authenticated experience */}
               <Route
                 path="/dashboard"
                 element={
                   <RequireAuth>
                     <Dashboard />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/cart"
+                element={
+                  <RequireAuth>
+                    <Cart />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/checkout"
+                element={
+                  <RequireAuth>
+                    <Checkout />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/orders"
+                element={
+                  <RequireAuth>
+                    <Orders />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/bookings"
+                element={
+                  <RequireAuth>
+                    <Bookings />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/community"
+                element={
+                  <RequireAuth>
+                    <Community />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/messages"
+                element={
+                  <RequireAuth>
+                    <Messages />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <RequireAuth>
+                    <Admin />
                   </RequireAuth>
                 }
               />
@@ -140,4 +209,4 @@ createRoot(document.getElementById("root")!).render(
       </ConvexAuthProvider>
     </RootErrorBoundary>
   </StrictMode>,
-);
+)

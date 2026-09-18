@@ -43,6 +43,21 @@ export const listPublished = query({
   },
 });
 
+/** The signed-in user's posts, including drafts, newest first. */
+export const listMine = query({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (userId === null) return [];
+    const posts = await ctx.db
+      .query("posts")
+      .withIndex("by_author", (q) => q.eq("authorId", userId))
+      .collect();
+    posts.sort((a, b) => b._creationTime - a._creationTime);
+    return posts;
+  },
+});
+
 /** One post with its comments. Drafts are visible only to the author or an admin. */
 export const get = query({
   args: { id: v.id("posts") },
