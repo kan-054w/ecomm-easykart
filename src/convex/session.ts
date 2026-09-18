@@ -21,8 +21,9 @@ export const me = query({
 });
 
 /**
- * True when anyone may claim the first admin slot (no admin exists yet).
- * The claim mutation then flips this off, so exactly one team member gets it.
+ * True when the current signed-in user may claim the first admin slot: they
+ * must be a real (non-anonymous) teammate and no admin may exist yet. The
+ * claim mutation enforces the same rules.
  */
 export const canClaimAdmin = query({
   args: {},
@@ -31,16 +32,25 @@ export const canClaimAdmin = query({
       .query("users")
       .filter((q) => q.eq(q.field("role"), "admin"))
       .first();
-    return admin === null;
+    if (admin !== null) return false;
+    const userId = await getAuthUserId(ctx);
+    if (userId === null) return false;
+    const user = await ctx.db.get(userId);
+    return user !== null && !(user.isAnonymous ?? false);
   },
 });
 
-/** Bootstrap: the first signed-in user may claim the admin role. */
+/** Bootstrap: the first real (non-anonymous) teammate may claim the admin role. */
 export const claimAdmin = mutation({
   args: {},
   handler: async (ctx) => {
     const userId = await requireUserId(ctx);
     const user = await ctx.db.get(userId);
+    if (user?.isAnonymous) {
+      throw new Error(
+        "Guest sessions cannot become admins. Sign in with your email first.",
+      );
+    }
     if (user?.role === "admin") return;
     const admin = await ctx.db
       .query("users")
