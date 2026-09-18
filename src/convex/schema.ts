@@ -92,6 +92,7 @@ const schema = defineSchema(
       price: v.number(), // minor units (cents)
       stockQuantity: v.number(),
       imageUrl: v.optional(v.string()),
+      imageStorageId: v.optional(v.id("_storage")), // uploaded product photo
       categoryId: v.optional(v.id("categories")),
       isActive: v.boolean(),
     })

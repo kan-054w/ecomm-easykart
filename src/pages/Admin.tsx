@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import type { OrderStatus } from "@/convex/schema";
+import { ImageDropzone } from "@/components/ImageDropzone";
 import { SiteFooter, SiteHeader } from "@/components/SiteHeader";
 import { RequireAdmin } from "@/components/RequireAdmin";
 import { Button } from "@/components/ui/button";
@@ -185,7 +186,7 @@ interface ProductRow {
   description?: string;
   price: number;
   stockQuantity: number;
-  imageUrl?: string;
+  imageUrl?: string | null;
   categoryId?: Id<"categories">;
   categoryName?: string | null;
   isActive: boolean;
@@ -204,7 +205,8 @@ function ProductsTab({
   const createCategory = useMutation(api.categories.adminCreate);
 
   const [formOpen, setFormOpen] = useState(false);
-  const [editing, setEditing] = useState<ProductRow | null>(null);
+  const [editingId, setEditingId] = useState<Id<"products"> | null>(null);
+  const editing = products?.find((p) => p._id === editingId) ?? null;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -216,7 +218,7 @@ function ProductsTab({
   const [newCategory, setNewCategory] = useState("");
 
   const openNew = () => {
-    setEditing(null);
+    setEditingId(null);
     setName("");
     setDescription("");
     setPrice("");
@@ -228,7 +230,7 @@ function ProductsTab({
   };
 
   const openEdit = (p: ProductRow) => {
-    setEditing(p);
+    setEditingId(p._id);
     setName(p.name);
     setDescription(p.description ?? "");
     setPrice((p.price / 100).toFixed(2));
@@ -256,8 +258,8 @@ function ProductsTab({
       isActive,
     };
     try {
-      if (editing) {
-        await update({ id: editing._id, ...fields });
+      if (editingId) {
+        await update({ id: editingId, ...fields });
         toast.success("Product updated.");
       } else {
         await create(fields);
@@ -318,6 +320,26 @@ function ProductsTab({
           <h3 className="text-sm font-semibold tracking-tight">
             {editing ? `Edit “${editing.name}”` : "New product"}
           </h3>
+          {editingId && editing ? (
+            <div>
+              <Label>Product photo</Label>
+              <div className="mt-2">
+                <ImageDropzone
+                  productId={editingId}
+                  imageUrl={editing.imageUrl}
+                />
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                Uploaded photos take precedence over the external image URL
+                below.
+              </p>
+            </div>
+          ) : (
+            <p className="rounded-md border border-dashed border-border px-4 py-3 text-xs text-muted-foreground">
+              Save the product first — then you can drag a photo straight onto
+              this form.
+            </p>
+          )}
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
               <Label htmlFor="p-name">Name</Label>
