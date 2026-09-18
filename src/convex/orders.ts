@@ -6,6 +6,14 @@ import type { Doc, Id } from "./_generated/dataModel";
 import { orderStatusValidator, paymentMethodValidator } from "./schema";
 import { requireAdmin, requireUserId } from "./helpers";
 
+/** Whether this deployment has live Stripe keys (drives test-mode card payments). */
+export const stripeConfigured = query({
+  args: {},
+  handler: async () => {
+    return Boolean(process.env.STRIPE_SECRET_KEY);
+  },
+});
+
 /** Human-readable order code, e.g. EK-3F9K2A. */
 function generateOrderCode(): string {
   const stamp = Date.now().toString(36).toUpperCase();

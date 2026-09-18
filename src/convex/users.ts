@@ -31,3 +31,26 @@ export const getCurrentUser = async (ctx: QueryCtx) => {
   }
   return await ctx.db.get(userId);
 };
+
+/** Signed-in directory of teammates, for messaging and pickers. */
+export const listTeammates = query({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (userId === null) return [];
+    const users = await ctx.db.query("users").collect();
+    return users
+      .filter((u) => u._id !== userId && !u.isAnonymous)
+      .map((u) => ({
+        _id: u._id,
+        name: u.name ?? null,
+        email: u.email ?? null,
+        image: u.image ?? null,
+        role: u.role ?? null,
+      }))
+      .sort(
+        (a, b) =>
+          (a.name ?? a.email ?? "").localeCompare(b.name ?? b.email ?? ""),
+      );
+  },
+});

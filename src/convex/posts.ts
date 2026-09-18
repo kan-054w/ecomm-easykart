@@ -1,21 +1,22 @@
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { mutation, query } from "./_generated/server";
+import type { QueryCtx } from "./_generated/server";
 import { v } from "convex/values";
-import { requireAdmin, requireUserId } from "./helpers";
+import type { Id } from "./_generated/dataModel";
+import { requireUserId } from "./helpers";
 
 const MAX_TITLE = 140;
 const MAX_BODY = 5000;
 const MAX_COMMENT = 1000;
 
+/** Best-effort display name for a user. */
 async function authorName(
-  ctx: { db: unknown },
-  authorId: Id,
+  ctx: QueryCtx,
+  authorId: Id<"users">,
 ): Promise<string> {
-  const user = await (ctx.db as never).get(authorId);
+  const user = await ctx.db.get(authorId);
   return user?.name ?? user?.email ?? "Teammate";
 }
-
-type Id = string;
 
 /** Published posts, newest first, with author and comment counts. */
 export const listPublished = query({
@@ -34,7 +35,7 @@ export const listPublished = query({
         .collect();
       result.push({
         ...post,
-        authorName: await authorName(ctx, post.authorId as Id),
+        authorName: await authorName(ctx, post.authorId),
         commentCount: comments.length,
       });
     }
@@ -65,11 +66,11 @@ export const get = query({
       ...post,
       isAuthor,
       canModerate: isAuthor || isAdmin,
-      authorName: await authorName(ctx, post.authorId as Id),
+      authorName: await authorName(ctx, post.authorId),
       comments: await Promise.all(
         comments.map(async (c) => ({
           ...c,
-          authorName: await authorName(ctx, c.authorId as Id),
+          authorName: await authorName(ctx, c.authorId),
         })),
       ),
     };
