@@ -187,6 +187,7 @@ interface ProductRow {
   price: number;
   stockQuantity: number;
   imageUrl?: string | null;
+  imageStorageId?: Id<"_storage">;
   categoryId?: Id<"categories">;
   categoryName?: string | null;
   isActive: boolean;
@@ -235,7 +236,9 @@ function ProductsTab({
     setDescription(p.description ?? "");
     setPrice((p.price / 100).toFixed(2));
     setStock(String(p.stockQuantity));
-    setImageUrl(p.imageUrl ?? "");
+    // p.imageUrl can be a storage URL when an uploaded photo exists; the
+    // external-URL field should only ever hold the external fallback.
+    setImageUrl(p.imageStorageId ? "" : (p.imageUrl ?? ""));
     setCategoryId(p.categoryId ?? "");
     setIsActive(p.isActive);
     setFormOpen(true);
