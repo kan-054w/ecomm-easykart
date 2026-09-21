@@ -89,7 +89,20 @@ class RootErrorBoundary extends React.Component<
   }
 }
 
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
+// Resolve the Convex deployment URL. VITE_CONVEX_URL is injected from the
+// project's configured environment; fall back to the deployment URL so the
+// preview still boots if the env var is momentarily missing.
+const CONVEX_URL =
+  (import.meta.env.VITE_CONVEX_URL as string | undefined) ||
+  "https://valiant-capybara-895.convex.cloud";
+
+if (!/^https?:\/\//.test(CONVEX_URL)) {
+  throw new Error(
+    "VITE_CONVEX_URL is not an absolute URL. Set it in the project's environment settings.",
+  );
+}
+
+const convex = new ConvexReactClient(CONVEX_URL);
 
 
 
