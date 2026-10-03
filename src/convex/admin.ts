@@ -122,6 +122,9 @@ const SEED_PRODUCTS: {
   { category: "Stationery", name: "Field Notebook — Set of 3", description: "Dot-grid notebooks with 120 gsm paper and thread-bound spines.", price: 18000, stockQuantity: 40 },
 ];
 
+/** Rupee-scale seed prices, exported for tests. */
+export const SEED_PRICES = SEED_PRODUCTS.map((p) => p.price);
+
 /**
  * Fill the catalog with a small sample range. Runs only while the store is
  * completely empty, so it is safe to call from anywhere (e.g. the landing page).
