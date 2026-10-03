@@ -105,21 +105,21 @@ const SEED_PRODUCTS: {
   category: string;
   name: string;
   description: string;
-  price: number; // cents
+  price: number; // paise
   stockQuantity: number;
 }[] = [
-  { category: "Tech", name: "Mechanical Keyboard — Tactile", description: "Tenkeyless board with tactile switches, white PBT keycaps, and a detachable USB-C cable.", price: 12900, stockQuantity: 14 },
-  { category: "Tech", name: "Noise-Cancelling Headphones", description: "Over-ear, closed-back headphones with adaptive noise cancelling and a 30-hour battery.", price: 24900, stockQuantity: 8 },
-  { category: "Tech", name: "USB-C Docking Station", description: "Eleven-port dock with dual 4K display output and 100 W passthrough charging.", price: 15900, stockQuantity: 11 },
-  { category: "Tech", name: "4K Conference Webcam", description: "Auto-framing webcam with a physical privacy shutter and beam-forming microphones.", price: 9900, stockQuantity: 16 },
-  { category: "Workspace", name: "Brass Desk Lamp", description: "Articulated lamp with a weighted brass base and a warm, dimmable LED.", price: 11900, stockQuantity: 9 },
-  { category: "Workspace", name: "Linen Desk Mat", description: "Stitched-edge mat in washed linen with an anti-slip backing, 80 × 40 cm.", price: 4900, stockQuantity: 22 },
-  { category: "Workspace", name: "Monitor Riser — Oak", description: "Solid oak riser that lifts a display to eye level and clears cable clutter.", price: 8900, stockQuantity: 12 },
-  { category: "Workspace", name: "Cable Organizer Set", description: "Six magnetic cable clips and two under-desk trays in matte steel.", price: 2400, stockQuantity: 30 },
-  { category: "Everyday Carry", name: "Steel Water Bottle — 750 ml", description: "Double-walled, vacuum-sealed bottle that keeps drinks cold for 24 hours.", price: 3900, stockQuantity: 26 },
-  { category: "Everyday Carry", name: "Leather Card Holder", description: "Slim four-pocket card holder in vegetable-tanned leather.", price: 6900, stockQuantity: 18 },
-  { category: "Everyday Carry", name: "Commuter Backpack — 18 L", description: "Water-resistant backpack with a padded 16-inch laptop sleeve.", price: 13900, stockQuantity: 10 },
-  { category: "Stationery", name: "Field Notebook — Set of 3", description: "Dot-grid notebooks with 120 gsm paper and thread-bound spines.", price: 1800, stockQuantity: 40 },
+  { category: "Tech", name: "Mechanical Keyboard — Tactile", description: "Tenkeyless board with tactile switches, white PBT keycaps, and a detachable USB-C cable.", price: 129000, stockQuantity: 14 },
+  { category: "Tech", name: "Noise-Cancelling Headphones", description: "Over-ear, closed-back headphones with adaptive noise cancelling and a 30-hour battery.", price: 249000, stockQuantity: 8 },
+  { category: "Tech", name: "USB-C Docking Station", description: "Eleven-port dock with dual 4K display output and 100 W passthrough charging.", price: 159000, stockQuantity: 11 },
+  { category: "Tech", name: "4K Conference Webcam", description: "Auto-framing webcam with a physical privacy shutter and beam-forming microphones.", price: 99000, stockQuantity: 16 },
+  { category: "Workspace", name: "Brass Desk Lamp", description: "Articulated lamp with a weighted brass base and a warm, dimmable LED.", price: 119000, stockQuantity: 9 },
+  { category: "Workspace", name: "Linen Desk Mat", description: "Stitched-edge mat in washed linen with an anti-slip backing, 80 × 40 cm.", price: 49000, stockQuantity: 22 },
+  { category: "Workspace", name: "Monitor Riser — Oak", description: "Solid oak riser that lifts a display to eye level and clears cable clutter.", price: 89000, stockQuantity: 12 },
+  { category: "Workspace", name: "Cable Organizer Set", description: "Six magnetic cable clips and two under-desk trays in matte steel.", price: 24000, stockQuantity: 30 },
+  { category: "Everyday Carry", name: "Steel Water Bottle — 750 ml", description: "Double-walled, vacuum-sealed bottle that keeps drinks cold for 24 hours.", price: 39000, stockQuantity: 26 },
+  { category: "Everyday Carry", name: "Leather Card Holder", description: "Slim four-pocket card holder in vegetable-tanned leather.", price: 69000, stockQuantity: 18 },
+  { category: "Everyday Carry", name: "Commuter Backpack — 18 L", description: "Water-resistant backpack with a padded 16-inch laptop sleeve.", price: 139000, stockQuantity: 10 },
+  { category: "Stationery", name: "Field Notebook — Set of 3", description: "Dot-grid notebooks with 120 gsm paper and thread-bound spines.", price: 18000, stockQuantity: 40 },
 ];
 
 /**

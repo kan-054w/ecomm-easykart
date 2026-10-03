@@ -247,7 +247,7 @@ function ProductsTab({
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!PRICE_RE.test(price)) {
-      toast.error("Enter a price like 12.99.");
+      toast.error("Enter a price like 499.00.");
       return;
     }
     setBusy(true);
@@ -354,12 +354,12 @@ function ProductsTab({
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="p-price">Price (USD)</Label>
+              <Label htmlFor="p-price">Price (₹)</Label>
               <Input
                 id="p-price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                placeholder="19.99"
+                placeholder="499.00"
                 inputMode="decimal"
                 required
               />

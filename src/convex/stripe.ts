@@ -30,7 +30,7 @@ export const createCheckoutSession = action({
       line_items: order.items.map((item) => ({
         quantity: item.quantity,
         price_data: {
-          currency: "usd",
+          currency: "inr",
           unit_amount: item.unitPrice,
           product_data: { name: item.productName },
         },

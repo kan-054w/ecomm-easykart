@@ -1,11 +1,11 @@
 import { format, formatDistanceToNowStrict } from "date-fns";
 
-/** Prices are stored in minor units (cents). */
-export function formatCurrency(cents: number): string {
-  return new Intl.NumberFormat("en-US", {
+/** Prices are stored in minor units (paise). */
+export function formatCurrency(paise: number): string {
+  return new Intl.NumberFormat("en-IN", {
     style: "currency",
-    currency: "USD",
-  }).format(cents / 100);
+    currency: "INR",
+  }).format(paise / 100);
 }
 
 export function formatDate(ms: number): string {
