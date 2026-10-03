@@ -1,0 +1,16 @@
+{
+  "name": "easykart",
+  "short_name": "easykart",
+  "description": "The internal storefront for your team — curated equipment, scheduling, and announcements.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
