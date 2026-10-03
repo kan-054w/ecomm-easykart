@@ -89,7 +89,7 @@ const schema = defineSchema(
     products: defineTable({
       name: v.string(),
       description: v.optional(v.string()),
-      price: v.number(), // minor units (cents)
+      price: v.number(), // minor units (paise)
       stockQuantity: v.number(),
       imageUrl: v.optional(v.string()),
       imageStorageId: v.optional(v.id("_storage")), // uploaded product photo
@@ -134,7 +134,7 @@ const schema = defineSchema(
       orderId: v.id("orders"),
       productId: v.id("products"),
       productName: v.string(), // snapshot at purchase time
-      unitPrice: v.number(), // price_at_purchase snapshot (cents)
+      unitPrice: v.number(), // price_at_purchase snapshot (paise)
       quantity: v.number(),
     }).index("by_order", ["orderId"]),
 

@@ -113,7 +113,7 @@ export const listAll = query({
 const productFields = {
   name: v.string(),
   description: v.optional(v.string()),
-  price: v.number(), // minor units (cents)
+  price: v.number(), // minor units (paise)
   stockQuantity: v.number(),
   imageUrl: v.optional(v.string()),
   imageStorageId: v.optional(v.id("_storage")),
