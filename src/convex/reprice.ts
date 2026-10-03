@@ -1,20 +1,22 @@
 import { internalMutation } from "./_generated/server";
+import { v } from "convex/values";
 
 /**
- * One-time migration: existing prices were entered at dollar scale (minor
- * units of USD). The store now prices in INR, so multiply every product price
- * by 10 (e.g. $129.00 → ₹1,290.00). Idempotence is the caller's concern; run
- * once via `bunx convex run reprice:scalePrices --identity '{"name":"Setup"}'`.
+ * One-off repair: the reprice migration ran a second time and inflated the
+ * catalog again (₹2,490 became ₹24,900). This divides every product price by
+ * the given factor to restore the intended rupee-scale prices.
+ *
+ * Divide by 10 to undo one accidental extra run.
  */
 export const scalePrices = internalMutation({
-  args: {},
-  handler: async (ctx) => {
+  args: { divide: v.number() },
+  handler: async (ctx, args) => {
     const products = await ctx.db.query("products").collect();
-    let changed = 0;
     for (const product of products) {
-      await ctx.db.patch(product._id, { price: product.price * 10 });
-      changed++;
+      await ctx.db.patch(product._id, {
+        price: Math.round(product.price / args.divide),
+      });
     }
-    return { repriced: changed };
+    return { repriced: products.length, dividedBy: args.divide };
   },
 });
